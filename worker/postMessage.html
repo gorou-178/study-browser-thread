@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>postMessage Sample</title>
+    <script>
+        const worker = new Worker('/worker/message.js');
+        worker.onmessage = event => {
+            console.log(event.data);
+        };
+        worker.postMessage('worker.globalScope: first');
+
+        const channel = new MessageChannel;
+        channel.port1.onmessage = event => {
+            console.log(event.data);
+        };
+        worker.postMessage('worker.messagePort', [channel.port2]);
+
+        const broadCastWorker = new Worker('/worker/broadcast.js');
+        Promise.all([
+            new Promise(resolve => broadCastWorker.onmessage = resolve),
+        ]).then(results => {
+            console.log(results[0].data);
+            const broadCastChannel = new BroadcastChannel('channel_name');
+            broadCastChannel.postMessage('broadcast: message');
+            broadCastChannel.close();
+        });
+    </script>
+</head>
+<body>
+    postMessage Sample
+</body>
+</html>

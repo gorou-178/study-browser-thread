@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Service Worker Sample</title>
+    <script>
+        navigator.serviceWorker.register('/serviceWorker/sw.js')
+            .then(reg => console.log('SW registered!', reg))
+            .catch(err => console.log('Boo!', err));            
+    </script>
+</head>
+<body>
+    Service Worker Sample
+</body>
+</html>

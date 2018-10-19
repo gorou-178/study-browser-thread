@@ -1,0 +1,11 @@
+{
+  "name": "study-thread",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "php -S localhost:3000"
+  },
+  "author": "",
+  "license": "MIT"
+}

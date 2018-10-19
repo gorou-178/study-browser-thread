@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Worker and Atomics Sample</title>
+    <script>
+        const array = new Uint8Array(new SharedArrayBuffer(1));
+        const index = 0;
+        Atomics.store(array, index, 1);
+        console.log(Atomics.load(array, index));
+        const worker = new Worker('/worker/worker.js');
+        worker.onmessage = e => {
+            console.log(Atomics.load(array, index));
+        };
+        worker.postMessage(array.buffer);
+        console.log(array);
+    </script>
+</head>
+<body>
+    Worker and Atomics Sample
+</body>
+</html>
